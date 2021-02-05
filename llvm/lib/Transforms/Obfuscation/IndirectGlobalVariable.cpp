@@ -40,7 +40,7 @@ struct IndirectGlobalVariable : public FunctionPass {
       for (User::op_iterator op = (*I).op_begin(); op != (*I).op_end(); ++op) {
         Value *val = *op;
         if (GlobalVariable *GV = dyn_cast<GlobalVariable>(val)) {
-          if (!GV->isThreadLocal() && GVNumbering.count(GV) == 0) {
+          if (!GV->isThreadLocal() && GVNumbering.count(GV) == 0 && !GV->isDLLImportDependent()) {
             GVNumbering[GV] = GlobalVariables.size();
             GlobalVariables.push_back((GlobalVariable *) val);
           }
