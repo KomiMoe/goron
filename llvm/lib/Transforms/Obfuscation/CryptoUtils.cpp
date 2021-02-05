@@ -32,6 +32,11 @@
 #include <cstring>
 #include <cstdio>
 
+#ifdef _WIN32
+#include <random>
+#include <chrono>
+#endif
+
 // Stats
 #define DEBUG_TYPE "CryptoUtils"
 STATISTIC(statsGetBytes, "a. Number of calls to get_bytes ()");
@@ -618,7 +623,19 @@ void CryptoUtils::populate_pool() {
 }
 
 void CryptoUtils::prng_seed() {
+#ifdef _WIN32
+  std::mt19937 mt(std::chrono::system_clock::now().time_since_epoch().count());
+  for (size_t i = 0; i < 4; i++)
+  {
+    ((int*)key)[i] = mt();
+  }
+  memset(ctr, 0, 16);
 
+  // Once the seed is there, we compute the
+  // AES128 key-schedule
+  aes_compute_ks(ks, key);
+  seeded = true;
+#else
 #if defined(__linux__)
   std::ifstream devrandom("/dev/urandom");
 #else
@@ -646,6 +663,7 @@ void CryptoUtils::prng_seed() {
   } else {
     errs() << Twine("Cannot open /dev/random");
   }
+#endif
 }
 
 void CryptoUtils::inc_ctr() {

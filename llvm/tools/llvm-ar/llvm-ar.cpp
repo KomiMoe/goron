@@ -516,16 +516,16 @@ static bool comparePaths(StringRef Path1, StringRef Path2) {
 // as Windows file paths are case-insensitive. 
 // CompareStringOrdinal compares two Unicode strings for
 // binary equivalence and allows for case insensitivity.
-#ifdef _WIN32
-  SmallVector<wchar_t, 128> WPath1, WPath2;
-  failIfError(sys::path::widenPath(normalizePath(Path1), WPath1));
-  failIfError(sys::path::widenPath(normalizePath(Path2), WPath2));
+//#ifdef _WIN32
+//  SmallVector<wchar_t, 128> WPath1, WPath2;
+//  failIfError(sys::path::widenPath(normalizePath(Path1), WPath1));
+//  failIfError(sys::path::widenPath(normalizePath(Path2), WPath2));
 
-  return CompareStringOrdinal(WPath1.data(), WPath1.size(), WPath2.data(),
-                              WPath2.size(), true) == CSTR_EQUAL;
-#else
+  //return CompareStringOrdinal(WPath1.data(), WPath1.size(), WPath2.data(),
+                              //WPath2.size(), true) == CSTR_EQUAL;
+//#else
   return normalizePath(Path1) == normalizePath(Path2);
-#endif
+//#endif
 }
 
 // Implement the 'x' operation. This function extracts files back to the file
