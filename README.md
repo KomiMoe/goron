@@ -10,24 +10,11 @@ Yet another llvm based obfuscator.
  - 过程相关控制流平坦混淆(-mllvm -irobf-cff)
 
 ## 混淆效果
-- ### 未混淆
- ![](images/demo.png)
 - ### 间接跳转(-mllvm -irobf-indbr)
- ![](images/demo-indirect-br.png)
 - ### 间接函数调用(-mllvm -irobf-icall)
- ![](images/demo-indirect-call.png)
 - ### 间接全局变量引用(-mllvm -irobf-indgv)
- ![](images/demo-indirect-globals.png)
 - ### 字符串(c string)加密功能(-mllvm -irobf-cse)
- ![](images/demo-string-encryption.png)
 - ### 过程相关控制流平坦混淆(-mllvm -irobf-cff)
- ![](images/demo-control-flow-flatten.png)
-- ### [源码及混淆二进制](examples)
-
-## 下载
-```
-git clone https://github.com/amimo/goron.git -b llvm-7.1.0
-```
 
 ## 编译
 
